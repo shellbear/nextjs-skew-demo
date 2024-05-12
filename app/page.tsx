@@ -1,6 +1,8 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
+const { VERCEL_DEPLOYMENT_ID } = process.env;
+
 function UploadVideoForm() {
   async function handleCreate(data: FormData) {
     "use server";
@@ -100,11 +102,17 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full gap-8">
-        <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
+        <div className="relative z-[-1] flex flex-col gap-2 place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
           <h1 className="text-4xl font-bold z-10">
             <span>Monday 12th, </span>
             <span className="opacity-30">May 2024</span>
           </h1>
+          {VERCEL_DEPLOYMENT_ID && (
+            <span className="text-sm font-mono text-gray-500">
+              {" "}
+              (Vercel Deployment ID {VERCEL_DEPLOYMENT_ID})
+            </span>
+          )}
         </div>
 
         <div className="mb-32 flex flex-col text-center w-full justify-center lg:mb-0 lg:w-1/3 gap-4">
