@@ -9,7 +9,8 @@ function UploadVideoForm() {
 
     const title = data.get("title");
     if (typeof title !== "string" || !title) {
-      throw new Error("Title is required");
+      console.error("title is required");
+      throw new Error("title is required");
     }
 
     await sql.query(`INSERT INTO posts (title) VALUES ('${title}')`);
@@ -17,29 +18,19 @@ function UploadVideoForm() {
   }
 
   return (
-    <form className="flex flex-col gap-4 w-full" action={handleCreate}>
-      <label
-        htmlFor="search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only"
+    <form className="flex flex-col gap-4 w-full relative" action={handleCreate}>
+      <input
+        name="title"
+        className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+        placeholder="Add new task"
+        required
+      />
+      <button
+        type="submit"
+        className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
       >
-        Add new task
-      </label>
-      <div className="relative">
-        <input
-          type="title"
-          id="title"
-          name="title"
-          className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-          placeholder="Add new task"
-          required
-        />
-        <button
-          type="submit"
-          className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-        >
-          +
-        </button>
-      </div>
+        +
+      </button>
     </form>
   );
 }
@@ -88,7 +79,7 @@ async function PostsList() {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 gap-20">
+    <main className="flex min-h-screen flex-col items-center p-24 gap-10">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <div className="flex gap-4">
           <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl">
