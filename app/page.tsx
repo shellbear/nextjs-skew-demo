@@ -2,7 +2,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
 function UploadVideoForm() {
-  async function handleUpload(data: FormData) {
+  async function handleCreate(data: FormData) {
     "use server";
 
     const title = data.get("title");
@@ -12,12 +12,10 @@ function UploadVideoForm() {
 
     await sql.query(`INSERT INTO posts (title) VALUES ('${title}')`);
     revalidatePath("/");
-
-    console.log("Successfully inserted post");
   }
 
   return (
-    <form className="flex flex-col gap-4 w-full" action={handleUpload}>
+    <form className="flex flex-col gap-4 w-full" action={handleCreate}>
       <label
         htmlFor="search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only"
